@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
-// @version     1.1
+// @version     1.2
 // @description Adds a button to upload files to catbox.moe in Discord
-// @author      Lysdexia
+// @author      OasisVee
 // @match       https://*.discord.com/*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setClipboard
