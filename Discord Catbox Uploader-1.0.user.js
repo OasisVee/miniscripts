@@ -2,7 +2,7 @@
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
 // @version     1.0
-// @description Adds a button to upload files to catbox.moe in Discord with custom tooltip
+// @description Adds a button to upload files to catbox.moe in Discord
 // @author      Lysdexia
 // @match       https://*.discord.com/*
 // @grant       GM_xmlhttpRequest
