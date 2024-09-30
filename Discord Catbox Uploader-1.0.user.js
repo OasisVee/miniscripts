@@ -2,7 +2,7 @@
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
 // @version     1.3
-// @description Adds a button to upload files to catbox.moe in Discord
+// @description adds a button to upload files to catbox.moe, output gets copied to your clipboard
 // @author      OasisVee
 // @match       https://*.discord.com/*
 // @grant       GM_xmlhttpRequest
@@ -11,6 +11,8 @@
 // @connect     catbox.moe
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=catbox.moe
 // @license     MIT
+// @downloadURL https://update.greasyfork.org/scripts/510832/Discord%20Catbox%20Uploader.user.js
+// @updateURL   https://update.greasyfork.org/scripts/510832/Discord%20Catbox%20Uploader.meta.js
 // ==/UserScript==
 
 (function() {
