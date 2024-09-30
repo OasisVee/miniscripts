@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
-// @version     1.0
+// @version     1.1
 // @description Adds a button to upload files to catbox.moe in Discord
 // @author      Lysdexia
 // @match       https://*.discord.com/*
@@ -10,6 +10,7 @@
 // @grant       GM_addStyle
 // @connect     catbox.moe
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=catbox.moe
+// @license     MIT
 // ==/UserScript==
 
 (function() {
