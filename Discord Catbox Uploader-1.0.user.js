@@ -9,6 +9,7 @@
 // @grant       GM_setClipboard
 // @grant       GM_addStyle
 // @connect     catbox.moe
+// @icon        https://www.google.com/s2/favicons?sz=64&domain=catbox.moe
 // ==/UserScript==
 
 (function() {
@@ -59,7 +60,7 @@
                 padding: 0px 8px;
                 height: 0px;
                 line-height: 0px;
-                top: -22px;
+                top: -20px;
                 margin-left: 23px;
                 position: relative;
                 transform: translateX(0px);
