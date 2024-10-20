@@ -2,7 +2,7 @@
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
 // @version     1.5
-// @description adds a button to upload files to catbox.moe, output gets copied to your clipboard
+// @description adds a button to upload files to catbox.moe, output gets copied to your clipboard. version 1.5: you can now add your userhash for catbox by right clicking the button
 // @author      OasisVee
 // @match       https://*.discord.com/*
 // @grant       GM_xmlhttpRequest
