@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name        Discord Catbox Uploader
 // @namespace   https://tampermonkey.net/
-// @version     1.3
+// @version     1.5
 // @description adds a button to upload files to catbox.moe, output gets copied to your clipboard
 // @author      OasisVee
 // @match       https://*.discord.com/*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setClipboard
 // @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
 // @connect     catbox.moe
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=catbox.moe
 // @license     MIT
@@ -46,6 +48,33 @@
             bottom: -16px;
             left: 50%;
             transform: translateX(-50%);
+        }
+        #catbox-settings {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #36393f;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 10000;
+            display: none;
+        }
+        #catbox-settings input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #40444b;
+            border: none;
+            color: #dcddde;
+        }
+        #catbox-settings button {
+            background-color: #5865f2;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
         }
     `;
 
@@ -99,6 +128,7 @@
             catboxButton.addEventListener('click', handleCatboxUpload);
             catboxButton.addEventListener('mouseenter', showTooltip);
             catboxButton.addEventListener('mouseleave', hideTooltip);
+            catboxButton.addEventListener('contextmenu', toggleSettings);
             uploadButton.parentNode.insertBefore(catboxButton, uploadButton.nextSibling);
             return true;
         }
@@ -136,6 +166,11 @@
         formData.append('reqtype', 'fileupload');
         formData.append('fileToUpload', file);
 
+        const userHash = GM_getValue('catboxUserHash', '');
+        if (userHash) {
+            formData.append('userhash', userHash);
+        }
+
         GM_xmlhttpRequest({
             method: 'POST',
             url: 'https://catbox.moe/user/api.php',
@@ -165,6 +200,46 @@
                 setTimeout(() => document.body.removeChild(notificationElement), 300);
             }, 3000);
         });
+    }
+
+    function toggleSettings(event) {
+        event.preventDefault();
+        const existingSettings = document.getElementById('catbox-settings');
+        if (existingSettings) {
+            existingSettings.remove();
+            return;
+        }
+
+        const settingsDiv = document.createElement('div');
+        settingsDiv.id = 'catbox-settings';
+        settingsDiv.innerHTML = `
+            <input type="text" id="catbox-user-hash" placeholder="Enter Catbox User Hash">
+            <button id="save-catbox-settings">Save</button>
+        `;
+        document.body.appendChild(settingsDiv);
+        const userHashInput = document.getElementById('catbox-user-hash');
+        userHashInput.value = GM_getValue('catboxUserHash', '');
+        document.getElementById('save-catbox-settings').addEventListener('click', saveSettings);
+        settingsDiv.style.display = 'block';
+
+        // Close settings when clicking outside
+        document.addEventListener('click', closeSettingsOutside);
+    }
+
+    function closeSettingsOutside(event) {
+        const settingsDiv = document.getElementById('catbox-settings');
+        if (settingsDiv && !settingsDiv.contains(event.target) && event.target.id !== 'catbox-upload-btn') {
+            settingsDiv.remove();
+            document.removeEventListener('click', closeSettingsOutside);
+        }
+    }
+
+    function saveSettings() {
+        const userHash = document.getElementById('catbox-user-hash').value;
+        GM_setValue('catboxUserHash', userHash);
+        document.getElementById('catbox-settings').remove();
+        showNotification('Catbox settings saved!', 'success');
+        document.removeEventListener('click', closeSettingsOutside);
     }
 
     function init() {
